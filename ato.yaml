@@ -1,0 +1,22 @@
+requires-atopile: "0.12.5"
+
+paths:
+  src: ./
+  layout: ./layouts
+
+builds:
+  default:
+    entry: main.ato:App
+
+# This metadata is only required for publishing
+# Uncomment it and fill out the fields to publish your package
+# package:
+#   identifier: # fill me!/chaayos_priming_bridge_board
+#   repository: # fill me!
+#   version: "0.1.0"  # recommended first version
+#   authors:
+#     - name: Goutham Gandhi Nadendla
+#       email: gouthamgandhi@ftlabs.io
+#   summary: # fill me!
+#   license: Not open source
+#   homepage: # fill me!
