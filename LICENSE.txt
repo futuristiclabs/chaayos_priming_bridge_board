@@ -1,1 +1,5 @@
+Copyright (c) Futuristic Labs Private Limited. All Rights Reserved.
 
+This is proprietary software. Unauthorized copying, modification, distribution,
+or use of this software is strictly prohibited. This repository is private
+and closed source.

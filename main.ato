@@ -1,4 +1,77 @@
-"""Brand new atopile project!"""
+"""Chaayos priming bridge board."""
+
+import Resistor
+import Capacitor
+from "parts/JST_B4B_XH_A/JST_B4B_XH_A.ato" import JST_B4B_XH_A_package
+from "parts/Texas_Instruments_TCA9534PWR/Texas_Instruments_TCA9534PWR.ato" import Texas_Instruments_TCA9534PWR_package
 
 module App:
-    pass
+    # Host connector: pin1=GND, pin2=SCL, pin3=SDA, pin4=VCC
+    host = new JST_B4B_XH_A_package
+
+    # Sensor connectors (pin1=VCC, pin2=GND, pin3=SIG, pin4=MODE)
+    water_1 = new JST_B4B_XH_A_package
+    water_2 = new JST_B4B_XH_A_package
+    milk_1 = new JST_B4B_XH_A_package
+    milk_2 = new JST_B4B_XH_A_package
+
+    # I2C GPIO expander used to report 4 priming inputs to host over I2C
+    io = new Texas_Instruments_TCA9534PWR_package
+
+    # I2C pull-ups
+    pullup_scl = new Resistor
+    pullup_sda = new Resistor
+    pullup_scl.resistance = 4.7kohm +/- 1%
+    pullup_sda.resistance = 4.7kohm +/- 1%
+    pullup_scl.package = "0603"
+    pullup_sda.package = "0603"
+
+    # Local decoupling for the expander
+    c_decouple = new Capacitor
+    c_decouple.capacitance = 100nF +/- 10%
+    c_decouple.package = "0603"
+
+    # Power distribution
+    host.P4 ~ io.VCC
+    host.P1 ~ io.GND
+
+    # I2C host lines
+    host.P2 ~ io.SCL
+    host.P3 ~ io.SDA
+
+    # I2C pull-up network to VCC
+    pullup_scl.unnamed[0] ~ io.SCL
+    pullup_scl.unnamed[1] ~ io.VCC
+    pullup_sda.unnamed[0] ~ io.SDA
+    pullup_sda.unnamed[1] ~ io.VCC
+
+    # Decoupling capacitor between VCC and GND
+    c_decouple.unnamed[0] ~ io.VCC
+    c_decouple.unnamed[1] ~ io.GND
+
+    # Fixed I2C address pins (0b000)
+    io.A0 ~ io.GND
+    io.A1 ~ io.GND
+    io.A2 ~ io.GND
+
+    # Sensor power rails
+    water_1.P1 ~ io.VCC
+    water_1.P2 ~ io.GND
+    water_2.P1 ~ io.VCC
+    water_2.P2 ~ io.GND
+    milk_1.P1 ~ io.VCC
+    milk_1.P2 ~ io.GND
+    milk_2.P1 ~ io.VCC
+    milk_2.P2 ~ io.GND
+
+    # Sensor digital outputs to expander GPIOs
+    water_1.P3 ~ io.P0
+    water_2.P3 ~ io.P1
+    milk_1.P3 ~ io.P2
+    milk_2.P3 ~ io.P3
+
+    # MODE pins are kept low by default; adjust in a later revision if needed
+    water_1.P4 ~ io.GND
+    water_2.P4 ~ io.GND
+    milk_1.P4 ~ io.GND
+    milk_2.P4 ~ io.GND

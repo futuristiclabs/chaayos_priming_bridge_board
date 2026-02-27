@@ -1,0 +1,20 @@
+#pragma experiment("TRAITS")
+import has_designator_prefix
+import has_part_picked
+import is_atomic_part
+import is_auto_generated
+
+component JST_B4B_XH_A_package:
+    # This trait marks this file as auto-generated
+    # If you want to manually change it, remove the trait
+    trait is_auto_generated<system="ato_part", source="easyeda:C41422491", date="2026-02-27T09:59:10.195779+00:00", checksum="9be652e81319942596bbc1e2833139232529836486e04878d88c6d6b58d64c9e">
+
+    trait is_atomic_part<manufacturer="JST", partnumber="B4B-XH-A", footprint="CONN-TH_B4B-XH-A-LF-SN.kicad_mod", symbol="B4B-XH-A.kicad_sym", model="XH2.5-4A.step">
+    trait has_part_picked::by_supplier<supplier_id="lcsc", supplier_partno="C41422491", manufacturer="JST", partno="B4B-XH-A">
+    trait has_designator_prefix<prefix="J">
+
+    # pins
+    signal P1 ~ pin 1
+    signal P2 ~ pin 2
+    signal P3 ~ pin 3
+    signal P4 ~ pin 4
